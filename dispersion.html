@@ -37,23 +37,26 @@
 <script type="text/javascript" src="./js/fragment.js"></script>
 <script type="text/javascript">
 	$(function () {
-
+		var imgList=['img/firstBroad.png','img/broadcast.png']
+		var timeInterVal=null;
 		var fragmentConfig = {
 			container: '.img-flex', //显示容器
-			line: 15, //多少行
-			column: 28, //多少列
-			width: 1000, //显示容器的宽度
+			line: 22, //多少行
+			column: 30, //多少列
+			width: 1920, //显示容器的宽度
+			height:1080,
 			animeTime: 9000, //最长动画时间,图片的取值将在 animeTime*0.33 + animeTime*0.66之前取值 
-			img: 'img/smile.jpg' //图片路径
+			img: 'img/firstBroad.png' //图片路径
 		};
 		setTimeout(function () {
 			fragmentImg(fragmentConfig);
 		}, 1000)
 		$(document).keyup(function (event) {
+			clearInterval(timeInterVal)
 			console.log(event.keyCode)
 			$('.img-flex').empty()
 			if (event.keyCode === 81) {
-				fragmentConfig.img = 'img/smile.jpg'
+				fragmentConfig.img = 'img/broadcast.png'
 				fragmentImg(fragmentConfig);
 			}
 			if (event.keyCode === 87) {
@@ -157,9 +160,15 @@
 				fragmentImg(fragmentConfig);
 			}
 		});
-		setTimeout(() => {
-			$('.trigger').trigger('click')
-		}, 1000);
+		$('.trigger').trigger('click')
+		var imgIdx=0
+		setInterval(() => {
+			$('.img-flex').empty()
+			imgIdx=(imgIdx++)==1?0:imgIdx++
+			console.log(imgIdx)
+			fragmentConfig.img = imgList[imgIdx]
+			fragmentImg(fragmentConfig);
+		}, 18000);
 		var dlgtrigger = document.querySelector('[data-dialog]'),
 			somedialog = document.getElementById(dlgtrigger.getAttribute('data-dialog')),
 			dlg = new DialogFx(somedialog);
